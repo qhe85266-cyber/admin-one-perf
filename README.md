@@ -1,170 +1,95 @@
-# [Admin One &mdash; Free React Tailwind 4.x Admin Dashboard with dark mode](https://justboil.me/tailwind-admin-templates/free-react-dashboard/)
+# Admin One Perf · Qi
 
-[![version](https://img.shields.io/github/v/release/justboil/admin-one-react-tailwind)](https://justboil.me/tailwind-admin-templates/free-react-dashboard/)  [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://justboil.me/tailwind-admin-templates/free-react-dashboard/)
+## 中文
 
-### Tailwind 4.x React with Next.js and TypeScript
+这是 Qi 的 GitHub 作品集项目：基于 [JustBoil Admin One React Tailwind](https://github.com/justboil/admin-one-react-tailwind) 的 MIT 开源管理后台性能优化分支，使用 Next.js、React、TypeScript 和 Tailwind CSS。
 
-[![Free React Tailwind TypeScript admin dashboard with dark mode](https://static.justboil.me/templates/one/repo-tailwind-react.png?v=4)](https://justboil.github.io/admin-one-react-tailwind/)
+### 本地运行
 
-[![React TypeScript Tailwind white & dark styles](https://static.justboil.me/templates/one/repo-styles.png)](https://justboil.github.io/admin-one-react-tailwind/)
+需要 Node.js `^20.19.0 || >=22.12.0`。
 
-### Tailwind 4.x React with Next.js and TypeScript
-
-**Admin One** is fast, beautiful and free React Next Tailwind CSS 4.x admin dashboard with TypeScript. 
-
-* Built with **TypeScript**, **React**, **Tailwind CSS 4** framework & **Next.js** with **app router**
-* **React Redux** state library &mdash; [Info](https://react-redux.js.org/)
-* **Dark mode**
-* **Production CSS** is only **&thickapprox;38kb**
-* Reusable components
-* Free under MIT License
-* [Premium version](https://justboil.me/tailwind-admin-templates/react-dashboard/) available
-
-## Table of Contents
-
-* [Vue version](#looking-for-vue-version)
-* [Responsive layout](#responsive-layout)
-  * [Mobile & tablet](#mobile--tablet)
-  * [Small laptops](#small-laptops-1024px)
-  * [Laptops & desktops](#laptops--desktops)
-* [Demo](#demo)
-  * [Free dashboard demo](#free-dashboard-demo)
-  * [Premium dashboard demo](#premium-dashboard-demo)
-* [Quick Start](#quick-start)
-  * [Get code & install](#get-code--install)
-  * [Builds](#builds)
-  * [Linting and formatting](#linting-and-formatting)
-* [Docs](#docs)
-* [Browser Support](#browser-support)
-* [Reporting Issues](#reporting-issues)
-* [Licensing](#licensing)
-* [Useful Links](#useful-links)
-
-## Looking for Vue version?
-
-This is **Tailwind React TypeScript** version
-
-Looking for **Tailwind Vue**? Check [Admin One - Vue Tailwind dashboard](https://github.com/justboil/admin-one-vue-tailwind) version
-
-## Responsive layout
-
-### Mobile & tablet
-
-Mobile layout with hidden aside menu and collapsable cards & tables
-
-[![Free React Tailwind CSS 4 admin dashboard](https://static.justboil.me/templates/one/one-tailwind-vue-mobile.png)](https://justboil.github.io/admin-one-react-tailwind/)
-
-### Small laptops 1024px
-
-Small laptop layout with show/hide aside menu option
-
-[![Free React Tailwind CSS 4 admin dashboard](https://static.justboil.me/templates/one/one-tailwind-vue-1024.png)](https://justboil.github.io/admin-one-react-tailwind/)
-
-[![Free React Tailwind CSS 4 admin dashboard](https://static.justboil.me/templates/one/one-tailwind-vue-1024-menu-open.png)](https://justboil.github.io/admin-one-react-tailwind/)
-
-### Laptops & desktops
-
-Classic layout with aside menus on the left
-
-[![Free React Tailwind CSS 4 admin dashboard](https://static.justboil.me/templates/one/one-tailwind-vue-widescreen.png)](https://justboil.github.io/admin-one-react-tailwind/)
-
-## Demo
-
-### Free Dashboard Demo
-
-https://justboil.github.io/admin-one-react-tailwind/
-
-### Premium Dashboard Demo
-
-Premium version is coming soon
-
-## Quick Start
-
-Get code & install. Then `dev` or `build`
-
-* [Get code & install](#get-code--install)
-* [Builds](#builds)
-* [Linting and formatting](#linting-and-formatting)
-
-### Get code & install
-
-#### Get the repo
-
-* [Create new repo](https://github.com/justboil/admin-one-react-tailwind/generate) with this template
-* &hellip; or clone this repo on GitHub
-* &hellip; or [download .zip](https://github.com/justboil/admin-one-react-tailwind/archive/master.zip) from GitHub
-
-#### Install
-
-`cd` to project's dir and run `npm install`
-
-### Builds
-
-Build are handled by Next.js CLI &mdash; [Info](https://nextjs.org/docs/app/api-reference/cli/next)
-
-#### Hot-reloads for development
-
-```
+```sh
+npm ci
 npm run dev
 ```
 
-#### Builds and minifies for production
+打开 http://localhost:3000/admin-one-react-tailwind 。生产构建与运行：
 
-```
-npm run build
-```
-
-#### Exports build for static hosts
-
-Set `IS_OUTPUT_EXPORT` environment variable to `true` (or set `output` in next.config.ts)
-
-### Linting & Formatting
-
-#### Lint
-
-```
-npm run lint
+```sh
+npm ci && npm run build
+npm start
 ```
 
-#### Format with prettier
+保留原有 basePath `/admin-one-react-tailwind` 和所有路由。登录页位于 `/admin-one-react-tailwind/login`；任意凭据均可，点击 Login 或 Home 即可进入后台，无需账号。
 
+### Qi 的改动
+
+- 图表区域进入视口后，通过 IntersectionObserver 和 `next/dynamic` 加载 ChartLineSample、Chart.js 与 react-chartjs-2；加载前显示固定 `h-96` 骨架，保留刷新按钮与卸载清理。
+- NumberDynamic 使用 requestAnimationFrame 和正确的 `[value, duration]` 依赖；值不变时不重启动画，卸载或依赖变化时取消动画，支持数值增减。
+- DiceBear 头像替换为本地彩色首字母头像，移除 Google Analytics 脚本。
+- 登录页增加免账号演示提示；移除登录表单凭据的控制台输出。
+- 保留 MIT LICENSE、JustBoil 署名及原有 basePath。
+
+### 性能结果
+
+| 指标 | 优化前（提供的基线） | 优化后（本次生产构建） |
+| --- | --- | --- |
+| Dashboard First Load JS | 约 181 kB | 120 kB（约减少 34%） |
+| 图表代码 | 约 65 KiB gzip，首屏同步加载 | 独立异步 chunk，进入视口才加载 |
+| Dashboard 自动请求的外部第三方域名 | 2（DiceBear、GA） | 0 |
+| NumberDynamic effect | 无依赖数组，每次渲染重跑 | `[value, duration]`，帧动画可取消 |
+
+结果来自 `npm run build`（Next.js 15.5.6）；Dashboard 路由 Size 为 6.51 kB，所有路由共享 First Load JS 为 102 kB。First Load JS 是构建报告指标，并非实测首屏耗时。进入图表区域后仍需下载图表代码。
+
+域名统计针对默认后台的自动网络请求，不包括用户点击的外部链接、社交分享元数据，以及 responsive / 样式选择页面保留的 `static.justboil.me` 图片；相应 images remotePatterns 配置保留。
+
+### 许可证与致谢
+
+上游：[justboil/admin-one-react-tailwind](https://github.com/justboil/admin-one-react-tailwind)。继续使用 MIT 许可证；[LICENSE](LICENSE) 中的 JustBoil 版权声明原样保留。
+
+## English
+
+Qi’s portfolio fork of the MIT-licensed [JustBoil Admin One React Tailwind dashboard](https://github.com/justboil/admin-one-react-tailwind), focused on performance and an accessible account-free demo.
+
+### Run locally
+
+Requires Node.js `^20.19.0 || >=22.12.0`.
+
+```sh
+npm ci
+npm run dev
 ```
-npm run format
+
+Visit http://localhost:3000/admin-one-react-tailwind . To build and serve production:
+
+```sh
+npm ci && npm run build
+npm start
 ```
 
-## Docs
+The original `/admin-one-react-tailwind` basePath and routes are retained. Visit `/admin-one-react-tailwind/login`; any credentials work. Click Login or Home to enter without an account.
 
-Docs are coming soon
+### Qi’s changes
 
-## Browser Support
+- Load ChartLineSample, Chart.js, and react-chartjs-2 through IntersectionObserver and `next/dynamic` only when the chart section enters the viewport. A fixed `h-96` skeleton reserves space; reload still generates fresh data, and the observer is cleaned up.
+- Replace NumberDynamic’s effect without dependencies with a cancellable requestAnimationFrame animation using `[value, duration]`. Unchanged values do not restart it; decreasing values work too.
+- Replace DiceBear requests with local colored initials and remove both Google Analytics scripts.
+- Add a visible demo notice and remove credential logging from the login form.
+- Preserve the MIT license, upstream credit, and existing basePath.
 
-We try to make sure Dashboard works well in the latest versions of all major browsers
+### Performance
 
-<img src="https://justboil.me/images/browsers-svg/chrome.svg" width="64" height="64" alt="Chrome"> <img src="https://justboil.me/images/browsers-svg/firefox.svg" width="64" height="64" alt="Firefox"> <img src="https://justboil.me/images/browsers-svg/edge.svg" width="64" height="64" alt="Edge"> <img src="https://justboil.me/images/browsers-svg/safari.svg" width="64" height="64" alt="Safari"> <img src="https://justboil.me/images/browsers-svg/opera.svg" width="64" height="64" alt="Opera">
+| Metric | Before (supplied baseline) | After (production build) |
+| --- | --- | --- |
+| Dashboard First Load JS | ~181 kB | 120 kB (~34% reduction) |
+| Chart code | ~65 KiB gzip loaded eagerly | Separate async chunk loaded on viewport entry |
+| Automatic external third-party domains on dashboard | 2 (DiceBear + GA) | 0 |
+| NumberDynamic effect | No dependency array | `[value, duration]` with frame cleanup |
 
-## Reporting Issues
+Measured with `npm run build`, Next.js 15.5.6. Dashboard route Size: 6.51 kB; shared First Load JS: 102 kB. First Load JS is a build-report metric, not a measured paint time. Chart code is still downloaded when the section becomes visible.
 
-JustBoil's free items are limited to community support on GitHub.
+The domain count covers automatic requests on the default dashboard. It excludes outbound links, social metadata, and existing `static.justboil.me` images on responsive/style-selection pages; the image remotePatterns configuration remains available.
 
-The issue list is reserved exclusively for bug reports and feature requests. That means we do not accept usage questions. If you open an issue that does not conform to the requirements, it will be closed.
+### License and credit
 
-1. Make sure that you are using the latest version of the Dashboard. Issues for outdated versions are irrelevant
-2. Provide steps to reproduce
-3. Provide an expected behavior
-4. Describe what is actually happening
-5. Platform, Browser & version as some issues may be browser specific
-
-## Licensing
-
-- Copyright &copy; 2019-2025 JustBoil.me (https://justboil.me)
-- Licensed under MIT
-
-## Useful Links
-
-- [JustBoil.me](https://justboil.me/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Next.js Docs](https://nextjs.org/docs/app/getting-started)
-- [React.js Docs](https://react.dev/learn)
-- [Redux Docs](https://redux.js.org/introduction/getting-started) & [React-Redux Docs](https://react-redux.js.org/introduction/getting-started)
-- [TypeScript Docs](https://www.typescriptlang.org/docs/)
-- [TypeScript ESLint Docs](https://typescript-eslint.io/docs/)
+Upstream: [justboil/admin-one-react-tailwind](https://github.com/justboil/admin-one-react-tailwind). This fork remains MIT licensed. JustBoil’s copyright notice is retained unchanged in [LICENSE](LICENSE).

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import numeral from "numeral";
 
 type Props = {
@@ -15,36 +15,29 @@ const NumberDynamic = ({ prefix = "", suffix = "", value, duration = 500 }: Prop
 
   const newValueFormatted = newValue < 1000 ? newValue : numeral(newValue).format("0,0");
 
-  const stepDurationMs = 25;
-
-  const timeoutIds: NodeJS.Timeout[] = [];
-
-  const grow = (growIncrement: number) => {
-    const incrementedStep = Math.ceil(newValue + growIncrement);
-
-    if (incrementedStep > value) {
-      setNewValue(value);
-      return false;
-    }
-
-    setNewValue(incrementedStep);
-
-    timeoutIds.push(
-      setTimeout(() => {
-        grow(growIncrement);
-      }, stepDurationMs),
-    );
-  };
+  const currentValue = useRef(0);
 
   useEffect(() => {
-    grow(value / (duration / stepDurationMs));
+    const from = currentValue.current;
+    if (from === value) return;
+    if (duration <= 0) {
+      currentValue.current = value;
+      setNewValue(value);
+      return;
+    }
 
-    return () => {
-      timeoutIds.forEach((tid) => {
-        clearTimeout(tid);
-      });
+    let frameId: number;
+    const startedAt = performance.now();
+    const animate = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const nextValue = progress === 1 ? value : Math.round(from + (value - from) * progress);
+      currentValue.current = nextValue;
+      setNewValue(nextValue);
+      if (progress < 1) frameId = requestAnimationFrame(animate);
     };
-  });
+    frameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameId);
+  }, [value, duration]);
 
   return (
     <div>

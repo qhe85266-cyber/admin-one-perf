@@ -13,6 +13,11 @@ const LoginPage = () => {
   return (
     <SectionFullScreen bg="purplePink">
       <CardBox className="w-11/12 shadow-2xl md:w-7/12 lg:w-6/12 xl:w-4/12">
+        <p className="mb-6 rounded bg-blue-50 p-3 text-sm text-blue-900">
+          Demo mode — no account required. Click Login or Home to enter.
+          <br />
+          Any credentials work.
+        </p>
         <LoginForm />
       </CardBox>
     </SectionFullScreen>

@@ -17,9 +17,8 @@ type LoginForm = {
 export default function LoginForm() {
   const router = useRouter();
 
-  const handleSubmit = (formValues: LoginForm) => {
+  const handleSubmit = () => {
     router.push("/dashboard");
-    console.log("Form values", formValues);
   };
 
   const initialValues: LoginForm = {

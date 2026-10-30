@@ -1,35 +1,30 @@
-/* eslint-disable @next/next/no-img-element */
-// Why disabled:
-// avatars.dicebear.com provides svg avatars
-// next/image needs dangerouslyAllowSVG option for that
-
 import React, { ReactNode } from "react";
 
 type Props = {
   username: string;
-  api?: string;
   className?: string;
   children?: ReactNode;
 };
 
-export default function UserAvatar({
-  username,
-  api = "avataaars",
-  className = "",
-  children,
-}: Props) {
-  const avatarImage = `https://api.dicebear.com/7.x/${api}/svg?seed=${username.replace(
-    /[^a-z0-9]+/gi,
-    "-",
-  )}`;
+export default function UserAvatar({ username, className = "", children }: Props) {
+  const initials =
+    username
+      .trim()
+      .split(/[\s._-]+/)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase() || "?";
 
   return (
     <div className={className}>
-      <img
-        src={avatarImage}
-        alt={username ?? undefined}
-        className="block h-auto w-full max-w-full rounded-full bg-gray-100 dark:bg-slate-800"
-      />
+      <span
+        role="img"
+        aria-label={username}
+        className="flex aspect-square w-full items-center justify-center rounded-full bg-blue-100 font-semibold text-blue-800 dark:bg-slate-700 dark:text-blue-100"
+      >
+        {initials}
+      </span>
       {children}
     </div>
   );
